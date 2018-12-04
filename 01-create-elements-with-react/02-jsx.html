@@ -1,0 +1,52 @@
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- om jsx files inline de transpilen -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const rootElement = document.getElementById('root');
+    /*puur javascript
+    const element = document.createElement('div');
+    element.textContent = 'Hello World';
+    element.className = 'container';
+    rootElement.appendChild(element); */
+    /* const element = React.createElement(
+        'div',
+        {className: 'container'},
+        'Hello World',
+        'GoodBye',
+    ) */
+    // ook goe
+    /* const element = React.createElement(
+        'div',
+        {className: 'container', children: ['Hello World',
+        'GoodBye']},
+    ) */
+    //en nu met jsx, veel leesbaarder en sneller
+    //jsx is html-like syntax getranspiled naar javascript
+    //vergeet de babel standalone script tag niet, we runnen dit filebased
+    /* const element = <div className='container'>Hello World</div>; */
+    //met een interpolation var
+    const hello = 'Hello World';
+    const myClassName = 'container';
+    
+    /* const element = <div className={myClassName}>{hello}</div>; */
+
+    //met props en de js spread operator
+    const props = {
+        className: 'container',
+        children: ['Hello World']
+    }
+    //op deze manier nemen we className en children over uit props
+    /* const element = <div {...props} />; */
+
+    //mmar we kunnen ze overriden
+    const element = <div {...props} className="my-class">Hi!</div>;
+
+
+
+    ReactDOM.render(element,rootElement);
+
+</script>
