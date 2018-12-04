@@ -7,13 +7,15 @@
 
 <script type="text/babel">
     const rootElement = document.getElementById('root');
+    //pas op voor hoofdletter M in Message, anders erkent React dat niet als een component
     const Message = props => <div>{props.msg}</div>;
     const element = (
         <div className="container">
-            <Message msg = "Hello World" />
+            <Message msg = true />
             <Message msg = "Bye World" />
         </div>
     )
+
     ReactDOM.render(element,rootElement);
 
 </script>
