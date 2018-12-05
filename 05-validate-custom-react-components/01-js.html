@@ -4,32 +4,51 @@
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <!-- om jsx files inline de transpilen -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- volgende cdn toegevoegd owv proptypes -->
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
 
 <script type="text/babel">
-    
+
     const rootElement = document.getElementById('root');
 
     function SayHello(props){
         return (
             <div>
-                Hello {props.firstName} {props.lastName}!
+                Hello {props.firstName} {props.lastName || 'unknown'}!
             </div>
         )
     }
-    const PropTypes = {
+//proptypes is reeds voorzien in een module van de React team, vergeet de cdn script tag niet bovenaan
+/*     const PropTypes = {
        string(props,propName,componentName){
         if(typeof props[propName] !== 'string'){
             return new Error(`Hey you should pass a string for ${propName} in ${componentName} but you passed a ${typeof props[propName]}!`);
         }
     },  
-    }
+    } */
 SayHello.propTypes = {
-    firtsName: PropTypes.string,
-    lastName: PropTypes.string,
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
 
 }
+
+class SayHelloAsClass extends React.Component{
+    static propTypes={
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+    }
+    render(){
+        const {firstName, lastName} = this.props;
+        return(
+            <div>
+                Hello {firstName} {lastName || 'unknown' }!
+                <SayHello firstName = {true} />
+            </div>
+        )
+    }
+}
     ReactDOM.render(
-        <SayHello firstName={true} />,
+        <SayHelloAsClass firstName="Jef" />,
         rootElement
     );
 
