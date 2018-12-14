@@ -19,19 +19,39 @@
             'peach',
         ]
 
-        state = {multline: '', commaSeparated: ''}
+        state = {multline: '', commaSeparated: '', multiSelect: []}
 
         handleCommaSeparatedChange = event => {
+            const value = event.target.value
+            const allVals = value
+                        .split(',')
+                        .map(v => v.trim())
+                        .filter(Boolean);
+            this.setState({commaSeparated: value,
+                            multiline: allVals.join('\n'),
+                            multiSelect: allVals.filter(v=>MyFancyForm.availableOptions.includes(v))
+                        })
             console.log(event.target.value)
         }
         handleMultilineChange = event => {
+            const {value} = event.target;
+            const allVals = value.split('\n').map(v=>v.trim()).filter(Boolean);
+            this.setState({
+                commaSeparated: allVals.join(','),
+                multiline: value,
+                multiSelect: allVals.filter(v=>MyFancyForm.availableOptions.includes(v))
+            })
             console.log('handleMultilineChanged')
         }
         handleMultiSelectChanged = event => {
-            console.log('handleMultiSelectChanged')
+            const allVals = Array.from(event.target.selectedOptions).map(o => o.value);
+            this.setState({multiSelect: allVals,
+                            multiline: allVals.join('\n'),
+                            commaSeparated: allVals.join(',')});
+            console.log(event.target.selectedOptions)
         }
         render() {
-            const {commaSeparated, multiline} = this.state
+            const {commaSeparated, multiline, multiSelect} = this.state
             return (
                 <form>
                     <div>
@@ -59,6 +79,34 @@
                                     this.handleMultilineChange
                                 }
                             />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            multiSelectValues:
+                            <br />
+                            <select
+                                multiple
+                                value={multiSelect}
+                                size={
+                                    MyFancyForm.availableOptions
+                                    .length
+                                }
+                                onChange={
+                                    this.handleMultiSelectChanged
+                                }
+                            >
+                                {
+                                    MyFancyForm.availableOptions.map(
+                                        optionValue => (
+                                            <option key={optionValue}
+                                                    value={optionValue}>
+                                                {optionValue}
+                                            </option>
+                                        )
+                                    )
+                                }
+                            </select>
                         </label>
                     </div>
                 </form>
