@@ -9,46 +9,64 @@
 <script src="https://unpkg.com/vanilla-tilt@1.4.1/dist/vanilla-tilt.min.js"></script>
 
 <script type="text/babel">
-    class NameForm extends React.Component {
-        state = {valid: false, msg: null};
-        handleSubmit = event => {
-             event.preventDefault();
-            /*const value = event.target.elements.userName.value;
-            const error = this.props.errorMessageFn(value,);
-            if (error) {
-                alert(`error: ${error}`);
-            } else {
-                alert(`success: ${value}`);
-            } */
+    class MyFancyForm extends React.Component {
+        static availableOptions = [
+            'apple',
+            'grape',
+            'cherry',
+            'orange',
+            'pear',
+            'peach',
+        ]
+
+        state = {multline: '', commaSeparated: ''}
+
+        handleCommaSeparatedChange = event => {
+            console.log(event.target.value)
         }
-        handleChange = (event) => {
-            const {value} = event.target;
-            
-            if (value.length >= 3 || value.includes('s')) {
-                this.setState({valid: true, msg: ''});
-            }else{
-                this.setState({valid: false, msg: 'must contain an s or be 3 chars min'});
-            }
-            
-            console.log({value: value, valid: this.state.valid});
+        handleMultilineChange = event => {
+            console.log('handleMultilineChanged')
         }
-       
+        handleMultiSelectChanged = event => {
+            console.log('handleMultiSelectChanged')
+        }
         render() {
-            const valid = this.state.valid;
+            const {commaSeparated, multiline} = this.state
             return (
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Name: 
-                        <input type="text" name="userName"
-                            onChange={this.handleChange} />
-                    </label><span>{this.state.msg}</span>
-                    <button type="submit" disabled={!valid}>Submit</button>
+                <form>
+                    <div>
+                        <label>
+                            comma separated values:
+                            <br />
+                            <input 
+                                type="text" 
+                                value={commaSeparated}
+                                onChange={this.handleCommaSeparatedChange}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            multiline values:
+                            <br />
+                            <textarea
+                                value={multiline}
+                                rows={
+                                    MyFancyForm.availableOptions
+                                        .length
+                                }
+                                onChange = {
+                                    this.handleMultilineChange
+                                }
+                            />
+                        </label>
+                    </div>
                 </form>
             )
         }
     }
     ReactDOM.render(
-        <NameForm />,
+        <MyFancyForm />,
         document.getElementById('root'),
     )
 </script>
