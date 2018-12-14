@@ -1,0 +1,43 @@
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- om jsx files inline de transpilen -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- volgende cdn toegevoegd owv proptypes -->
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    const rootElement = document.getElementById('root');
+    class Counter extends React.Component {
+        state = {count: 0}
+        
+        /* handleClick =function() {
+            this.setState(({count}) => ({
+                count: count +1
+            }))
+         }.bind(this); //read more about js this ... but using arrow functions avoids it and uses the 'lexical' this*/
+
+        handleClick = () => {
+            this.setState(({count}) => ({
+                count: count + 1}))
+        }
+
+        render() {
+            return (
+                <button onClick={this.handleClick}>
+                    {this.state.count}
+                </button>
+            )
+        }
+    }
+renderApp();
+    function renderApp(){
+        ReactDOM.render(
+            <Counter />,
+            rootElement
+        );
+    }
+    
+
+</script>

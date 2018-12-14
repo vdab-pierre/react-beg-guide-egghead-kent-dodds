@@ -19,12 +19,16 @@
                 </p>
                 <p>You typed: {state.username}</p>
                 <p>
-                    <input />
+                    <input onChange={updateUserName}/>
                 </p>
             </div>
         )
     }
-
+function updateUserName(event){
+    console.log(event);
+    
+    setState({username: event.target.value});
+}
     setState({eventCount: 10});
 
     function setState(newState){
